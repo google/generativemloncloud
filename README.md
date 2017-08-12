@@ -54,8 +54,8 @@ Artists and Machine Intelligence
 ### How To: Create and Deploy Model
 
 1.  cd into the data directory of the source code.
-2.  Run create model script (if you don't know your job name, use the -l flag)
-    Example: \
+2.  Run create model script (if you don't know your job name, use the -l flag) \
+    Example:
 
     ```shell
      sh create_model.sh -j $JOB_NAME
@@ -63,7 +63,7 @@ Artists and Machine Intelligence
 
     **Flags:** \
     \[-j JOB_NAME\] : required unless -l flag present, supplies job name \
-    \[-l\]: optional, if present lists 10 most resent jobs created by user \
+    \[-l\]: optional, if present lists 10 most resent jobs created by user
 
 3.  Look at your deployed model on the cloud dashboard under Cloud ML Engine!
 
