@@ -33,7 +33,6 @@ PORT=6006
 while getopts 'd::cp:' flag; do
   case "${flag}" in
     d) ORIGINAL_DATA_DIRECTORY="${OPTARG%/}"
-       DATA_DIR_PRESENT=true
        ;;
     c) CENTER_CROP='True'
        ;;
@@ -42,7 +41,6 @@ while getopts 'd::cp:' flag; do
 done
 
 readonly ORIGINAL_DATA_DIRECTORY
-readonly DATA_DIR_PRESENT
 readonly CENTER_CROP
 readonly PORT
 

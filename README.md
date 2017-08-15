@@ -1,7 +1,7 @@
 # Generative Art on the Cloud
 
 This tool uses the [Google Cloud Machine Learning
-API](https://cloud.google.com/ml) and [Tensorflow](https://tensorflow.org)
+API](https://cloud.google.com/ml) and [Tensorflow](https://tensorflow.org).
 
 The Generative Art on the Cloud project is a cloud based tool to aid in
 generative art. The end to end system design allows a user to have a custom
@@ -9,8 +9,6 @@ dataset of images to train a Variational Autoencoder Generative Adversarial
 Network (VAE-GAN) model on Cloud ML. From here, their model is deployed to the
 cloud, where they can input an embedding to have synthetic images generated from
 their dataset or input an image to get an embedding vector.
-
-Artists and Machine Intelligence
 
 ## How To Use the Tool
 
@@ -25,20 +23,54 @@ Artists and Machine Intelligence
     *   Enable Billing
     *   Enable Cloud ML Engine and Compute Engine APIs
 3.  Clone this repo
+    *   If using a TensorFlow virtualenv, make sure to clone into a subdirectory
+        of the virtualenv directory
 
 ### How To: Run a Training Job
 
-1.  cd into the data directory of the source code.
+A training job will train the VAE-GAN on your own training data!
+
+1.  cd into the data directory of the source code you just cloned. Make sure to
+    activate the tensorflow virtualenv (if that is the method you chose to
+    install TensorFlow).
+
 2.  Run the training script \
+    \
+    Dataset Tips:
+
+    *   Read [how Cloud ML interacts with the
+        data](https://cloud.google.com/ml-engine/docs/how-tos/working-with-data).
+    *   Accepted image formats: .jpg or .png
+    *   The larger your image set, the less chance of overfitting!
+    *   One rule of thumb is at least ~1000 images per class.
+        -   If you are trying to synthesize faces, try to have at least 1000
+            face images.
+        -   If you are trying to generate both cat and dog images, try to have
+            at least 1000 cats and 1000 dogs.
+    *   The model will crop / resize your images to 64x64 squares.
+        -   Use the -c flag to specify centered cropping (or else it will random
+            crop).
+        -   The image is cropped to a bounding box of side lengths of 0.75 *
+            minimum(original_height, original_width).
+        -   The image is resized to 64x64 (using
+            [tf.image.resize_images](https://www.tensorflow.org/api_docs/python/tf/image/resize_images)
+            to either downsample or upsample using bilinear interpolation).
+    *   This script will turn your image files into [TFRecords file
+        format](https://www.tensorflow.org/versions/r1.0/api_guides/python/python_io)
+        with Example protos and saves them to your GCS bucket. It partitions
+        your data into a training dataset and a validation dataset.
+    *   For efficient throughput, image files should not exceed 4 MB. Reducing
+        image size can increase throughput.
+
     Example:
 
     ```shell
-    sh run_training.sh -d ~/your_image_directory -c
+    sh run_training.sh -d $PATH_TO_TRAINING_DIR -c
     ```
 
     **Flags:** \
-    \[-d DATA_DIRECTORY\] : required, supplies image directory of .jpg or .png
-    images \
+    \[-d PATH_TO_TRAINING_DIR\] : required, supplies image directory of .jpg or
+    .png images \
     \[-c\] : optional, if present images will be center-cropped, if absent
     images will be randomly cropped. \
     \[-p\] : optional, port on which to start TensorBoard instance.
@@ -53,6 +85,8 @@ Artists and Machine Intelligence
 
 ### How To: Create and Deploy Model
 
+Now that we have a trained model saved on GCS, lets deploy it on Cloud ML!
+
 1.  cd into the data directory of the source code.
 2.  Run create model script (if you don't know your job name, use the -l flag) \
     Example:
@@ -63,7 +97,7 @@ Artists and Machine Intelligence
 
     **Flags:** \
     \[-j JOB_NAME\] : required unless -l flag present, supplies job name \
-    \[-l\]: optional, if present lists 10 most resent jobs created by user
+    \[-l\]: optional, if present lists 10 most recent jobs created by user
 
 3.  Look at your deployed model on the cloud dashboard under Cloud ML Engine!
 
@@ -72,7 +106,31 @@ Artists and Machine Intelligence
 
 ### How To: Run an Inference Job
 
-1.  Embedding to Image generation
+Now that we have a deployed model trained with your own data, we can use it to
+generate new samples.
+
+1.  Generate an Image!
+
+    *   I've provided a script to randomly generate an image from your model and
+        display it:
+
+        ```shell
+         sh generate_image.sh -m $MODEL_NAME
+        ```
+
+        **Flags:** \
+        \[-n MODEL_NAME\] : required unless -l flag present, specifies model to
+        generate image. \
+        \[-l\] : optional, if present lists all models associated with user. \
+        \[-d TEMP_DIR\] : optional, directory to which to write json file.
+
+    *   Assumes [PIL is installed](https://pypi.python.org/pypi/Pillow/2.2.1)
+
+        ```shell
+        $pip install Pillow
+        ```
+
+2.  Embedding to Image generation
 
     *   Use the command line & a json file!
 
@@ -84,7 +142,11 @@ Artists and Machine Intelligence
             ```
 
         *   Embedding array must have dimension of 100 (if using current
-            vae-gan)
+            vae-gan) or whatever was specified in the code:
+
+            ```python
+            model.py:32 EMBEDDING_SIZE = 100
+            ```
 
         *   Example command:
 
@@ -132,7 +194,7 @@ Artists and Machine Intelligence
             response_image = request.execute()
             ```
 
-2.  Image to Embedding generation
+3.  Image to Embedding generation
 
     *   Use the command line & a json file!
 
@@ -161,8 +223,10 @@ Artists and Machine Intelligence
 ## Acknowledgements
 
 Huge shoutout to this awesome
-[DCGAN](https://github.com/carpedm20/DCGAN-tensorflow). The architecture for the
-VAE-GAN was reliant on the DCGAN.
+[DCGAN](https://github.com/carpedm20/DCGAN-tensorflow). After much trial error,
+the architecture from this network was the one that produced the greatest
+generative results and ended up as the network architecture in the final version
+of this tool.
 
 ## Disclaimer
 

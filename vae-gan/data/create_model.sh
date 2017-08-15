@@ -24,13 +24,11 @@
 # [-l ] : if set, lists 10 most recent jobs run by user.
 
 JOB_NAME=''
-JOB_NAME_PRESENT=false
 LIST_JOBS=false
 
 while getopts 'j:l' flag; do
   case "${flag}" in
     j) JOB_NAME="${OPTARG}"
-       JOB_NAME_PRESENT=true
        ;;
     l) LIST_JOBS=true
   esac
