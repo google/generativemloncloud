@@ -55,9 +55,8 @@ def read_and_decode(data_directory, batch_size, mode, resized_image_size,
   original_image_width = tf.cast(features['image/width'], tf.int32)
 
   if crop_image_size is None:
-    crop_image_size = tf.cast(0.75 * tf.cast(
-        tf.minimum(original_image_width, original_image_height), tf.float32),
-                              tf.int32)
+    crop_image_size = tf.cast(
+        tf.minimum(original_image_width, original_image_height), tf.float32)
 
   # Crop rectangular image to centered bounding box.
   assert original_image_height > crop_image_size

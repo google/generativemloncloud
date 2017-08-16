@@ -31,7 +31,7 @@ embedding vector.
 
 A training job will train the VAE-GAN on your own training data!
 
-Warning: You will be using billable components of the Cloud Platform and will
+Important: You will be using billable components of the Cloud Platform and will
 incur charges when running a training job.
 
 1.  cd into the data directory of the source code you just cloned. Make sure to
@@ -54,7 +54,7 @@ incur charges when running a training job.
     *   The model will crop / resize your images to 64x64 squares.
         -   Use the -c flag to specify centered cropping (or else it will random
             crop).
-        -   The image is cropped to a bounding box of side lengths of 0.75 *
+        -   The image is cropped to a bounding box of side lengths of
             minimum(original_height, original_width).
         -   The image is resized to 64x64 (using
             [tf.image.resize_images](https://www.tensorflow.org/api_docs/python/tf/image/resize_images)
