@@ -1,14 +1,15 @@
-# Generative Art on the Cloud
+# Generative Machine Learning on the Cloud
 
 This tool uses the [Google Cloud Machine Learning
 API](https://cloud.google.com/ml) and [Tensorflow](https://tensorflow.org).
 
-The Generative Art on the Cloud project is a cloud based tool to aid in
-generative art. The end to end system design allows a user to have a custom
-dataset of images to train a Variational Autoencoder Generative Adversarial
-Network (VAE-GAN) model on Cloud ML. From here, their model is deployed to the
-cloud, where they can input an embedding to have synthetic images generated from
-their dataset or input an image to get an embedding vector.
+Generative Machine Learning on the Cloud is a cloud based tool to aid in
+generative art and synthetic image generation. The end to end system design
+allows a user to have a custom dataset of images to train a Variational
+Autoencoder Generative Adversarial Network (VAE-GAN) model on Cloud ML. From
+here, their model is deployed to the cloud, where they can input an embedding to
+have synthetic images generated from their dataset or input an image to get an
+embedding vector.
 
 ## How To Use the Tool
 
@@ -29,6 +30,9 @@ their dataset or input an image to get an embedding vector.
 ### How To: Run a Training Job
 
 A training job will train the VAE-GAN on your own training data!
+
+Warning: You will be using billable components of the Cloud Platform and will
+incur charges when running a training job.
 
 1.  cd into the data directory of the source code you just cloned. Make sure to
     activate the tensorflow virtualenv (if that is the method you chose to
