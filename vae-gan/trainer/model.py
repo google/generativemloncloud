@@ -71,7 +71,7 @@ def create_model():
   parser.add_argument(
       '--center_crop', dest='center_crop', default=False, action='store_true')
   args, task_args = parser.parse_known_args()
-  override_if_not_in_args('--max_steps', '80000', task_args)
+  override_if_not_in_args('--max_steps', '40000', task_args)
   override_if_not_in_args('--batch_size', '64', task_args)
   override_if_not_in_args('--eval_set_size', '370', task_args)
   override_if_not_in_args('--eval_interval_secs', '2', task_args)
@@ -531,9 +531,9 @@ class Model(object):
     Returns:
       The cost of the VAE.
     """
-    cost_reconstruct = tf.reduce_sum(tf.square(images - d_images))
+    cost_reconstruct = 10 * tf.reduce_sum(tf.square(images - d_images))
 
-    cost_latent = 0.5 * tf.reduce_sum(
+    cost_latent = 100.0 * tf.reduce_sum(
         tf.square(mean) + tf.square(stddev) - tf.log(tf.square(stddev)) - 1, 1)
 
     cost_encoder = tf.reduce_mean(cost_latent + cost_reconstruct)
