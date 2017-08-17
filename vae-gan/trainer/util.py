@@ -59,8 +59,8 @@ def read_and_decode(data_directory, batch_size, mode, resized_image_size,
         tf.minimum(original_image_width, original_image_height), tf.float32)
 
   # Crop rectangular image to centered bounding box.
-  assert original_image_height > crop_image_size
-  assert original_image_width > crop_image_size
+  assert original_image_height >= crop_image_size
+  assert original_image_width >= crop_image_size
   if center_crop:
     image = tf.image.crop_to_bounding_box(
         image, (original_image_height - crop_image_size) / 2,
