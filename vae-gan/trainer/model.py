@@ -534,7 +534,8 @@ class Model(object):
     cost_reconstruct = tf.reduce_sum(tf.square(images - d_images))
 
     cost_latent = tf.reduce_sum(
-        tf.square(mean) + tf.square(stddev) - tf.log(tf.clip_by_value(tf.square(stddev), 1e-10, 1.0)) - 1, 1)
+        tf.square(mean) + tf.square(stddev) -
+        tf.log(tf.maximum(tf.square(stddev), 1e-10)) - 1, 1)
 
     cost_encoder = tf.reduce_mean(cost_latent + cost_reconstruct)
     return cost_encoder / (self.resized_image_size * self.resized_image_size)
