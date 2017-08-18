@@ -533,7 +533,7 @@ class Model(object):
     """
     cost_reconstruct = tf.reduce_sum(tf.square(images - d_images))
 
-    cost_latent = tf.reduce_sum(
+    cost_latent = 0.5 * tf.reduce_sum(
         tf.square(mean) + tf.square(stddev) -
         tf.log(tf.maximum(tf.square(stddev), 1e-10)) - 1, 1)
 
