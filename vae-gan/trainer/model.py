@@ -110,7 +110,7 @@ class Model(object):
 
   def __init__(self, learning_rate, dropout, beta1, resized_image_size,
                crop_image_dimension, center_crop):
-    """Initializes Rgb VAE-GAN.
+    """Initializes VAE-GAN. DCGAN architecture: https://arxiv.org/abs/1511.06434
 
     Args:
       learning_rate: The learning rate for the three networks.
@@ -625,3 +625,4 @@ class Model(object):
 
     image = tf.cast(image, tf.float32) / 127.5 - 1
     return image
+
