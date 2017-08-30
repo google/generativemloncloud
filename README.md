@@ -141,8 +141,8 @@ generate new samples.
         *   Example format:
 
             ```json
-            json format:
-            {"embeddings": [5,10,-1.6,...,7.8], "key": "0"}
+            json format -- list truncated to length 4 instead of 100:
+            {"embeddings": [5,10,-1.6,7.8], "key": "0"}
             ```
 
         *   Embedding array must have dimension of 100 (if using current
@@ -163,14 +163,14 @@ generate new samples.
         *   Example format:
 
             ```json
-            json format example:
+            json format example -- embedding lists truncated to length 9:
 
-            {"embeddings": [0.1,2.3,-4.6,6.5,...,0,4.4,-0.9,-0.9,2.2], "key": "0"}
-            {"embeddings": [0.1,2.3,-4.6,6.5,...,1,4.4,-0.9,-0.9,2.2], "key": "1"}
-            {"embeddings": [0.1,2.3,-4.6,6.5,...,2,4.4,-0.9,-0.9,2.2], "key": "2"}
-            {"embeddings": [0.1,2.3,-4.6,6.5,...,3,4.4,-0.9,-0.9,2.2], "key": "3"}
-            {"embeddings": [0.1,2.3,-4.6,6.5,...,4,4.4,-0.9,-0.9,2.2], "key": "4"}
-            {"embeddings": [0.1,2.3,-4.6,6.5,...,5,4.4,-0.9,-0.9,2.2], "key": "5"}
+            {"embeddings": [0.1,2.3,-4.6,6.5,0,4.4,-0.9,-0.9,2.2], "key": "0"}
+            {"embeddings": [0.1,2.3,-4.6,6.5,1,4.4,-0.9,-0.9,2.2], "key": "1"}
+            {"embeddings": [0.1,2.3,-4.6,6.5,2,4.4,-0.9,-0.9,2.2], "key": "2"}
+            {"embeddings": [0.1,2.3,-4.6,6.5,3,4.4,-0.9,-0.9,2.2], "key": "3"}
+            {"embeddings": [0.1,2.3,-4.6,6.5,4,4.4,-0.9,-0.9,2.2], "key": "4"}
+            {"embeddings": [0.1,2.3,-4.6,6.5,5,4.4,-0.9,-0.9,2.2], "key": "5"}
             ```
 
         *   Json file must be on GCS
