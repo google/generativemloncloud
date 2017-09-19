@@ -57,9 +57,8 @@ fi
 
 JSON_OBJ=$(python create_random_embedding.py)
 
-echo -e "${JSON_OBJ} > "${TMP_FILE}"
+echo -e "${JSON_OBJ}" > "${TMP_FILE}"
 
 OUTPUT=$(gcloud ml-engine predict --model "${MODEL_NAME}" --json-instances "${TMP_FILE}")
-IMAGE=$(echo "${OUTPUT}"| cut -d' ' -f 4)
-
-python display_image.py --image "${IMAGE}"
+IMAGE=$(echo "${OUTPUT}"| awk 'NR==2 {print $2}')
+python display_image.py --base64_image "${IMAGE}"
