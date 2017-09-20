@@ -23,10 +23,14 @@ import cStringIO
 from PIL import Image
 
 parser = argparse.ArgumentParser()
-parser.add_argument('--image', type=str, default='')
+parser.add_argument('--base64_image', type=str, default='')
 args, _ = parser.parse_known_args()
 
-im = args.image.replace('_', '/').replace('-', '+')
+im = args.base64_image.replace('_', '/').replace('-', '+')
+
+missing_base64_padding = len(im) % 4
+if missing_base64_padding != 0:
+  im += ('=' * (4 - missing_base64_padding))
 
 img = Image.open(cStringIO.StringIO(im.decode('base64')))
 img.show()
