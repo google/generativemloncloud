@@ -21,7 +21,7 @@
 # Required if -l not set:
 # [-j JOB_NAME] : specifies training job from which to create / deploy model.
 # Optional:
-# [-l ] : if set, lists 10 most recent jobs run by user.
+# [-l] : if set, lists 10 most recent jobs run by user.
 
 JOB_NAME=''
 LIST_JOBS=false
