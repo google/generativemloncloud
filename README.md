@@ -123,7 +123,7 @@ generate new samples.
         ```
 
         **Flags:** \
-        \[-n MODEL_NAME\] : required unless -l flag present, specifies model to
+        \[-m MODEL_NAME\] : required unless -l flag present, specifies model to
         generate image. \
         \[-l\] : optional, if present lists all models associated with user. \
         \[-d TEMP_DIR\] : optional, directory to which to write json file.
